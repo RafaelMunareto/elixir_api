@@ -36,5 +36,11 @@ defmodule BExWeb.Router do
 
       forward "/mailbox", Plug.Swoosh.MailboxPreview
     end
+
+    scope "/", BExWeb do
+      pipe_through :api
+      get "/", WelcomeController, :index
+    end
+
   end
 end

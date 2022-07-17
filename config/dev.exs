@@ -3,7 +3,7 @@ import Config
 # Configure your database
 config :b_ex, BEx.Repo,
   username: "postgres",
-  password: "postgres",
+  password: "007986",
   hostname: "localhost",
   database: "b_ex_dev",
   stacktrace: true,
