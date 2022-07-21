@@ -39,9 +39,7 @@ defmodule BExWeb.Router do
 
     scope "/", BExWeb do
       pipe_through :api
-      get "/", WelcomeController, :index
-      resources "/trainers",  TrainersController
+      resources "/trainers", TrainersController
     end
-
   end
 end
