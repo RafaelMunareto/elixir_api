@@ -3,6 +3,7 @@ defmodule BEx.Trainer do
   import Ecto.Changeset
 
   @primary_key {:id, Ecto.UUID, autogenerate: true}
+
   schema "trainers" do
     field :name, :string
     field :password_hash, :string
@@ -10,15 +11,28 @@ defmodule BEx.Trainer do
     timestamps()
   end
 
+  @required_params [:name, :password]
+
   def build(params) do
     params
     |> changeset()
     |> apply_action(:insert)
   end
 
-  @required_params [:name, :password]
-  def changeset(params) do
-    %__MODULE__{}
+  def changeset(params), do: create_changeset(%__MODULE__{}, params)
+
+  @spec changeset(
+          {map, map}
+          | %{
+              :__struct__ => atom | %{:__changeset__ => map, optional(any) => any},
+              optional(atom) => any
+            },
+          :invalid | %{optional(:__struct__) => none, optional(atom | binary) => any}
+        ) :: Ecto.Changeset.t()
+  def changeset(trainer, params), do: create_changeset(trainer, params)
+
+  defp create_changeset(module_or_trainer, params) do
+    module_or_trainer
     |> cast(params, @required_params)
     |> validate_required(@required_params)
     |> validate_length(:password, min: 6)

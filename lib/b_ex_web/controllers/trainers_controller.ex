@@ -14,7 +14,6 @@ defmodule BExWeb.TrainersController do
     |> handle_delete(conn)
   end
 
-  @spec show(any, map) :: {:error, any} | Plug.Conn.t()
   def show(conn, %{"id" => id}) do
     id
     |> BEx.fetch_trainer()
@@ -32,7 +31,7 @@ defmodule BExWeb.TrainersController do
   defp handle_response({:ok, trainer}, conn, view, status) do
     conn
     |> put_status(status)
-    |> render(view, trainer: trainer)
+    |> render(view, %{trainer: trainer})
   end
 
   defp handle_response({:error, _changeset} = error, _conn, _view, _status), do: error
